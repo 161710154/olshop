@@ -55,23 +55,23 @@
                 @endrole
               </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 @role('admin')
                 <a href="{{route('customorderadmin.index')}}" class="nav-link active">
                   <i class="fa fa-black-tie nav-icon"></i>
                   <p>Custom Order Admin</p>
                 </a>
                 @endrole
-              </li>
+              </li> -->
 
-               <li class="nav-item">
+               <!-- <li class="nav-item">
                 @role('admin')
                 <a href="{{route('product.index')}}" class="nav-link active">
                   <i class="fa fa-black-tie nav-icon"></i>
                   <p>Rekap</p>
                 </a>
                 @endrole
-              </li>
+              </li> -->
 
               <li class="nav-item">
                 @role('member')

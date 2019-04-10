@@ -7,10 +7,13 @@ use App\Product;
 use App\Kategori;
 use App\Product_custom;
 use App\Custom;
+use App\User;
+use Auth;
 class FrontendController extends Controller
 {
 	public function index()
 	{
+        //  $product = Product::orderBy('updated_at','desc')->paginate(2);
     return view('frontend.index');
 }
 
@@ -55,7 +58,8 @@ class FrontendController extends Controller
     public function filter_product_custom($id)
 {
     $kategoripc = Product_custom::where('kategori_id', '=', $id)->get();
-    return view('frontend.index', compact('kategoripc'));
+    $carttt = Auth::user()->cart()->get();
+    return view('frontend.index', compact('kategoripc','carttt'));
 } 
     public function produk(Product $product)
     {

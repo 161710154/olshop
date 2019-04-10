@@ -36,7 +36,7 @@
 			  		<div class="form-group {{ $errors->has('gambar') ? ' has-error' : '' }}">
 			  			<label class="control-label col-md-3 col-sm-3 col-xs-3  ">Gambar</label>
 			  			<div class="col-md-9 pr-1">
-			  			<input type="file" name="gambar" class="form-control"  required>
+			  			<input type="file" name="foto" class="form-control"  required>
 			  			@if ($errors->has('gambar'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('gambar') }}</strong>

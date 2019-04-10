@@ -24,7 +24,7 @@
 
 			  		<div class="form-group {{ $errors->has('deskripsi') ? ' has-error' : '' }}">
 			  			<label class="control-label">deskripsi</label>	
-			  			<textarea id="text" type="ckeditor" name="deskripsi" class="ckeditor" required></textarea>
+			  			<textarea id="text" type="ckeditor" name="deskripsi" class="ckeditor" required>{{$product->deskripsi}}</textarea>
 			  			@if ($errors->has('deskripsi'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('deskripsi') }}</strong>
@@ -33,10 +33,10 @@
 			  		</div>
 
 
-					<div class="form-group {{ $errors->has('gambar') ? ' has-error' : '' }}">
+					<!-- <div class="form-group {{ $errors->has('gambar') ? ' has-error' : '' }}">
 			  			<label class="control-label col-md-3 col-sm-3 col-xs-3  ">Gambar</label>
 			  			<div class="col-md-9 pr-1">	
-			  			<input type="file" name="gambar" class="form-control" value="{{ $product->gambar }}"  required>
+			  			<input type="file" name="gambar" class="form-control" value="{{ $product->gambar }}">
 			  			@if (isset($product) && $product->gambar)
                                             <p>
                                                 <br>
@@ -47,6 +47,16 @@
 
                             </span>
                         @endif
+			  		</div> -->
+			  		<div class="form-group">
+			  			<label for="cc-payment" class="control-label mb-1">Gambar</label>
+			  			@if (isset ($product) && $product->gambar)
+			  			<p>
+			  				<img src="{{ asset('/assets/images/avatar/'.$product->gambar) }}" style="width:100px; height:100px;" alt="">
+			  			</p>
+			  			@endif
+			  			<br>
+			  			<input type="file" name="gambar" value="{{ $product->gambar }}">
 			  		</div>
 
 			  		<div class="form-group {{ $errors->has('harga') ? ' has-error' : '' }}">
@@ -75,7 +85,7 @@
 			 
 			  		<div class="form-group">
 			  			<button type="submit" class="btn btn-outline-primary">
-			  			<i class="fa fa-save">&nbsp</i>Tambah</button>
+			  			<i class="fa fa-save">&nbsp</i>Simpan</button>
 			  		</div>
 			  	</form>
 			  </div>

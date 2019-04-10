@@ -7,39 +7,80 @@
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
-			
+				
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
 					
 					<!-- Logo desktop -->		
-					<a href="#" class="logo">
+					<a href="" class="logo">
 						<img src="{{asset('images/MOKUZAI-01.png')}}" alt="IMG-LOGO">
 					</a>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li>
+							<li class="active-menu">
 								<a href="/">Home</a>
+							
 							</li>
 
 							<li>
-								<a href="profile">Profile</a>
+								<a href="/profile">Profile</a>
 							</li>
 
 							<li>
-								<a href="product">Product</a>
+								<a href="/product">Product</a>
 							</li>
 
+							<!-- <li>
+								<a href="customorder">Custom Order</a>
+							</li> -->
+
 							<li>
-								<a href="login">Login</a>
-							</li>
+								@if(Route::has('login'))
+								@auth
+								@role(['admin','member'])
+								<a href="{{ route('logout')}}"
+										onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();"
+												class="nav-link">
+												<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+												{{ csrf_field() }}
+												</form> Logout</a></li>
+												<ul class="dropdown">
+													<a href="{{ route('logout') }}"
+													onclick="event.preventDefault();
+															document.getElementById('logout-form').submit();"
+															class="nav-link">
+															<form id="logout-form" action="{{ route('logout')}}" method="POST" style="display: none;">
+																{{ csrf_field() }}
+															</form> </a>
+															@endrole
+															@else
+															<a href="login"></a>
+															@endauth
+															@endif
+												</ul>
+
+							<li> @role('member')<a> Hallo, {{ Auth::user()->name }} !</a> @endrole</li>
 
 						</ul>
 					</div>	
 
-
 					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+
+						@php
+							if(\Auth::check()){
+								$cart = \App\Cart::where('user_id', \Auth::user()->id)->get();
+							}
+						@endphp
+						@if(Auth::check() && $cart->count() > 0)
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{$cart->count()}}">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</div>
+						@endif
+					</div>
 				</nav>
 			</div>	
 		</div>
@@ -52,7 +93,7 @@
 	
 	<!-- Product -->
 @php
-$product = App\Product::paginate(1);
+$product = App\Product::paginate(10);
 $kategori = App\Kategori::all();
 @endphp
 
@@ -74,22 +115,28 @@ $kategori = App\Kategori::all();
 			<div class="row isotope-grid">
 				@foreach ($product as $data)
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item product{{$data->Kategori->id}}">
+
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
 							<img src="{{ asset('assets/images/avatar/'.$data->gambar.'') }}" width="300" height="300">
 
-							<a href="/produk/{{$data->slug}}" data-toggle="modal" data-target="#products{{$data->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1 " >
-								Quick View
+							<a href="/produk/{{$data->slug}}" data-toggle="modal" data-target="#products{{$data->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+									Quick View
 							</a>
+
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="/produk/{{$data->slug}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" data-toggle="modal" data-target="#products">
-									{{$data->nama}}
-									<p>{{$data->harga}}</p>
+								<a href="/produk/{{$data->slug}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" data-toggle="modal" data-target="#products{{$data->id}}">
+
+									<h4>{{  $data->nama  }}</h4>
+									<p>Rp. {{ number_format($data->harga,2,',','.')}}</p>
 								</a>
+								<span class="stext-105 cl3">
+									
+								</span>
 							</div>
 						</div>
 					</div>
@@ -198,16 +245,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								Deskripsi:
 							</span>
 
-							<p class="stext-102 cl3 p-t-23">
 								{!!$data->deskripsi!!}
-							</p>
+								<p>
 							
+							<span class="mtext-106 cl2">
+								Harga:
+							</span>
+							
+								Rp. {{ number_format($data->harga,2,',','.')}}
+							</p>
 							<!--  --><br>
 							<br>
 							<br>
 
-										<a href="/custom/{{$data->slug}}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-											Beli
+										<a href="{{url('add-cart',$data->id)}}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+											Masukkan Keranjang
 											</a>
 									</div>
 								</div>	

@@ -49,7 +49,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nama_kategori' => 'required|'
+            'nama_kategori' => 'required|unique:kategoris,nama_kategori'
         ]);
 
         $kategori = new kategori;

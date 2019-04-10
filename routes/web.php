@@ -60,6 +60,11 @@ function()	{
 	Route::resource('/custom','CustomController');
 	Route::resource('/customorder','CustomOrderController');
 });
+Route::group(
+    ['as' => 'api.', 'middleware'=>['cors']],
+    function() {
+        Route::resource('latihan', 'API\LatihanController');
+    });
 // Route::get('kategori/{kategori}', 'FrontendController@kategoriproduct');
 Route::get('/','FrontendController@product_index')->name('product_index');
 Route::get('/customi','CustomController@index_admin')->name('index_admin');
@@ -93,24 +98,20 @@ Route::group(['middleware'=>'auth'],function(){
         }
         return redirect()->back();
     });    
-
     Route::get('cart/{usr_id}', function ($usr_id) {
         $cart = \App\Cart::where('user_id', $usr_id)->get();
         return view('frontend.cart', compact('cart'));
     });
-
     Route::get('cart/delete/{id}', function ($id) {
         $cart = \App\Cart::find($id)->delete();
         return redirect()->back();
     });
-
     Route::post('cart/edit/{user_id}', function ( \Illuminate\Http\Request $request, $user_id) {
         for($i = 0; $i < count($request->id); $i++){
             $cart = \App\Cart::find($request->id[$i]);
             $cart->jumlah_brg = $request->jumlah_brg[$i];
             $cart->save();
         }
-
         return redirect()->back();
     });
     Route::post('checkout/{user_id}',function( \Illuminate\Http\Request $request, $user_id){
@@ -122,7 +123,6 @@ Route::group(['middleware'=>'auth'],function(){
         ]);
         // dd(json_decode($request->chart));
         foreach(json_decode($request->chart) as $data){
-
             $custom = new \App\custom;
             $custom->nama = \Auth::user()->name;
             $custom->alamat = $request->alamat;
@@ -132,12 +132,9 @@ Route::group(['middleware'=>'auth'],function(){
             $custom->pembayaran = $request->pembayaran;
             $custom->product_id = $data->product_id;
             $custom->user_id = \Auth::user()->id;
-
             $custom->save();
         }
-
         $del = \App\Cart::where('user_id', $user_id)->delete();
-
         return redirect()->back();
     });
 });

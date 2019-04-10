@@ -66,7 +66,6 @@ class ProductController extends Controller
         $product->nama = $request->nama;
         $product->slug=str_slug($request->nama, '-');
         $product->deskripsi = $request->deskripsi;
-        $product->gambar = $request->gambar;
         $product->harga = $request->harga;
         $product->kategori_id = $request->kategori_id;
 
@@ -124,7 +123,7 @@ class ProductController extends Controller
         $this->validate($request,[
             'nama' => 'required|',
             'deskripsi' => 'required|',
-            'gambar' => 'required|',
+            'gambar' => '',
             'harga' => 'required|',
             'kategori_id' => 'required|'
 
@@ -133,7 +132,6 @@ class ProductController extends Controller
         $product->nama = $request->nama;
         $product->slug=str_slug($request->nama, '-').'-'.str_random(6);
         $product->deskripsi = $request->deskripsi;
-        $product->gambar = $request->gambar;
         $product->harga = $request->harga;
         $product->kategori_id = $request->kategori_id;
 
@@ -154,7 +152,7 @@ class ProductController extends Controller
             }
         }
         $product->gambar = $filename;
-}
+        }
         $product->save();
         return redirect()->route('product.index');
     }

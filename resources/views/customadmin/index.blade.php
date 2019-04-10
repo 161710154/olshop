@@ -42,9 +42,9 @@
 		<td> {{ $data->pengiriman }} </td>
         <td> {{ date('M j, Y', strtotime($data->created_at)) }}</td>
 
-	<td>
+	<!-- <td>
 		<a class="btn btn-outline-primary" href=" {{ route('customadmin.edit',$data->id)}} "><i class="fa fa-file-text">&nbsp</i>Edit</a>
-	</td>
+	</td> -->
 	<td>
 							<form method="post" action="{{ route('customadmin.destroy',$data->id) }}">
 								<input name="_token" type="hidden" value="{{ csrf_token() }}">

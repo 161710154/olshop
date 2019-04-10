@@ -32,26 +32,47 @@
 								<a href="product">Product</a>
 							</li>
 
-							<li>
+							<!-- <li>
 								<a href="customorder">Custom Order</a>
-							</li>
+							</li> -->
 
 							<li>
-								<a href="login">Login</a>
-							</li>
+								@if(Route::has('login'))
+								@auth
+								@role(['admin','member'])
+								<a href="{{ route('logout')}}"
+										onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();"
+												class="nav-link">
+												<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+												{{ csrf_field() }}
+												</form> Logout</a></li>
+												<ul class="dropdown">
+													<a href="{{ route('logout') }}"
+													onclick="event.preventDefault();
+															document.getElementById('logout-form').submit();"
+															class="nav-link">
+															<form id="logout-form" action="{{ route('logout')}}" method="POST" style="display: none;">
+																{{ csrf_field() }}
+															</form> </a>
+															@endrole
+															@else
+															<a href="login"></a>
+															@endauth
+															@endif
+												</ul>
+
+							<li> @role('member')<a> Hallo, {{ Auth::user()->name }} !</a> @endrole</li>
 
 						</ul>
 					</div>	
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-							<i class="zmdi zmdi-search"></i>
-						</div>
 
 						@php
 							if(\Auth::check()){
-								$cart = \App\Cart::where('user_id', \Auth::user()->id);
+								$cart = \App\Cart::where('user_id', \Auth::user()->id)->get();
 							}
 						@endphp
 						@if(Auth::check() && $cart->count() > 0)
@@ -59,9 +80,6 @@
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 						@endif
-						<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
-							<i class="zmdi zmdi-favorite-outline"></i>
-						</a>
 					</div>
 				</nav>
 			</div>	
@@ -87,7 +105,7 @@
 			@endphp
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
-					@foreach(\App\cart::with('Product')->get() as $data)
+					@foreach($cart as $data)
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
 							<img src="{{asset('assets/images/avatar/'.$data->product->gambar)}}" alt="IMG">
@@ -95,7 +113,7 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								{{$data->product->nama}}
+								{{$data->Product->nama}}
 							</a>
 
 							<span class="header-cart-item-info">
@@ -165,13 +183,13 @@
 						<div class="flex-col-c-m h-full p-t-100 p-b-60 respon5">
 							<div class="layer-slick1 animated visible-true" data-appear="rollIn" data-delay="0">
 								<span class="ltext-202 txt-center cl0 respon2">
-									All Product
+									Ayo !
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="lightSpeedIn" data-delay="800">
 								<h2 class="ltext-104 txt-center cl0 p-t-22 p-b-40 respon1">
-									Discont up to 30%
+									Buruan beli !
 								</h2>
 							</div>
 								
@@ -189,13 +207,13 @@
 						<div class="flex-col-c-m h-full p-t-100 p-b-60 respon5">
 							<div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
 								<span class="ltext-202 txt-center cl0 respon2">
-									Souvenir Collection 2018
+									Souvenir
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="rotateInUpRight" data-delay="800">
 								<h2 class="ltext-104 txt-center cl0 p-t-22 p-b-40 respon1">
-									Souvenir Pernikahan
+									Dengan harga yang terjangkau dan berkualitas
 								</h2>
 							</div>
 								
@@ -221,18 +239,18 @@
 				<div class="block1 wrap-pic-w">
 					<img src="{{asset('assets/images/avatar/gantungan.jpg')}}" alt="IMG-BANNER" width="300" height="250">
 
-					<a href="product" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+					<a href="" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
 								<center>Kayu</center>
 							</span>
 						</div>
 
-						<div class="block1-txt-child2 p-b-4 trans-05">
+						<!-- <div class="block1-txt-child2 p-b-4 trans-05">
 							<div class="block1-link stext-101 cl0 trans-09">
 								Shop Now
 							</div>
-						</div>
+						</div> -->
 					</a>
 				</div>
 			</div>
@@ -242,7 +260,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="{{asset('assets/images/avatar/terarium.jpg')}}" alt="IMG-BANNER" width="300" height="250">
 
-					<a href="product" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+					<a href="" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
 								Terarium
@@ -253,11 +271,11 @@
 							</span>
 						</div>
 
-						<div class="block1-txt-child2 p-b-4 trans-05">
+						<!-- <div class="block1-txt-child2 p-b-4 trans-05">
 							<div class="block1-link stext-101 cl0 trans-09">
 								Shop Now
 							</div>
-						</div>
+						</div> -->
 					</a>
 				</div>
 			</div>
@@ -267,7 +285,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="{{asset('assets/images/avatar/souvenir.jpg')}}" alt="IMG-BANNER" width="300" height="250">
 
-					<a href="product" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+					<a href="" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
 								Souvenir
@@ -278,11 +296,11 @@
 							</span>
 						</div>
 
-						<div class="block1-txt-child2 p-b-4 trans-05">
+						<!-- <div class="block1-txt-child2 p-b-4 trans-05">
 							<div class="block1-link stext-101 cl0 trans-09">
 								Shop Now
 							</div>
-						</div>
+						</div> -->
 					</a>
 				</div>
 			</div>
@@ -333,7 +351,7 @@ $kategori = App\Kategori::all();
 								<a href="/produk/{{$data->slug}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" data-toggle="modal" data-target="#products{{$data->id}}">
 
 									<h4>{{  $data->nama  }}</h4>
-									<p>Rp. {{ number_format($data->harga,2,',','.')}}</p>
+									<p>Rp. {{ number_format($data->harga,0,',','.')}}</p>
 								</a>
 								<span class="stext-105 cl3">
 									
@@ -380,7 +398,7 @@ $kategori = App\Kategori::all();
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						<center>Mitra</center>
+						<center></center>
 					</h4>
 
 				</div>

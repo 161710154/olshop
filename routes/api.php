@@ -16,3 +16,20 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::group(
+//     ['as' => 'api.', 'middleware'=>['cors']],
+//     function() {
+//         Route::resource('latihan', 'API\LatihanController');
+//     });
+
+Route::group(['middleware' => 'cors'], function(){
+	Route::get('product','ApiController@product');
+});
+Route::group(['middleware' => 'cors'], function(){
+	Route::get('kategori','ApiController@kategori');
+});
+Route::group(['middleware' => 'cors'], function(){
+	Route::get('custom','ApiController@custom');
+});
+

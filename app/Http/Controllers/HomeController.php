@@ -36,11 +36,11 @@ class HomeController extends Controller
 
     protected function memberDashboard()
     {
-        return view('frontend.custom');
+        return view('frontend.index');
     }
 
-    protected function membercustomDashboard()
-    {
-        return view('frontend.customorder');
-    }
+    // protected function membercustomDashboard()
+    // {
+    //     return view('frontend.customorder');
+    // }
 }

@@ -24,7 +24,7 @@
 			 
 			  		<div class="form-group">
 			  			<button type="submit" class="btn btn-outline-primary">
-			  			<i class="fa fa-save">&nbsp</i>Tambah</button>
+			  			<i class="fa fa-save">&nbsp</i>Simpan</button>
 			  		</div>
 			  	</form>
 			  </div>

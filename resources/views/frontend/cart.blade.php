@@ -36,90 +36,88 @@
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
-			<div class="top-bar">
-				<div class="content-topbar flex-sb-m h-full container">
-					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
-
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							USD
-						</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="wrap-menu-desktop how-shadow1">
+			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
 					
 					<!-- Logo desktop -->		
-					<a href="#" class="logo">
-						<img src="{{asset('images/icons/logo-01.png') }}" alt="IMG-LOGO">
+					<a href="" class="logo">
+						<img src="{{asset('images/MOKUZAI-01.png')}}" alt="IMG-LOGO">
 					</a>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li>
-								<a href="index.html">Home</a>
-								<ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul>
+							<li class="active-menu">
+								<a href="/">Home</a>
+							
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
-							</li>
-
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+								<a href="profile">Profile</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="product">Product</a>
 							</li>
 
-							<li>
-								<a href="about.html">About</a>
-							</li>
+							<!-- <li>
+								<a href="customorder">Custom Order</a>
+							</li> -->
 
 							<li>
-								<a href="contact.html">Contact</a>
-							</li>
+								@if(Route::has('login'))
+								@auth
+								@role(['admin','member'])
+								<a href="{{ route('logout')}}"
+										onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();"
+												class="nav-link">
+												<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+												{{ csrf_field() }}
+												</form> Logout</a></li>
+												<ul class="dropdown">
+													<a href="{{ route('logout') }}"
+													onclick="event.preventDefault();
+															document.getElementById('logout-form').submit();"
+															class="nav-link">
+															<form id="logout-form" action="{{ route('logout')}}" method="POST" style="display: none;">
+																{{ csrf_field() }}
+															</form> </a>
+															@endrole
+															@else
+															<a href="login">Login</a>
+															@endauth
+															@endif
+												</ul>
+
+							<li> @role('member')<a> Hallo, {{ Auth::user()->name }} !</a> @endrole</li>
+
 						</ul>
 					</div>	
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-							<i class="zmdi zmdi-search"></i>
-						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+						@php
+							if(\Auth::check()){
+								$cart = \App\Cart::where('user_id', \Auth::user()->id)->get();
+							}
+						@endphp
+						@if(Auth::check() && $cart->count() > 0)
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{$cart->count()}}">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
-
-						<a href="#" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
-							<i class="zmdi zmdi-favorite-outline"></i>
-						</a>
+						@endif
 					</div>
 				</nav>
 			</div>	
+		</div>
+			
+
+				<center>
+					<h1>Shopping Cart<br></h1>
+			</center>
+<br><br>
 		</div>
 
 		<!-- Header Mobile -->
@@ -154,70 +152,7 @@
 
 
 		<!-- Menu Mobile -->
-		<div class="menu-mobile">
-			<ul class="topbar-mobile">
-				<li>
-					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
-				</li>
-
-				<li>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
-						</a>
-					</div>
-				</li>
-			</ul>
-
-			<ul class="main-menu-m">
-				<li>
-					<a href="index.html">Home</a>
-					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul>
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
-				</li>
-
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-				</li>
-
-				<li>
-					<a href="blog.html">Blog</a>
-				</li>
-
-				<li>
-					<a href="about.html">About</a>
-				</li>
-
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
-			</ul>
-		</div>
-
+		
 		<!-- Modal Search -->
 		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 			<div class="container-search-header">
@@ -236,111 +171,12 @@
 	</header>
 
 	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
-
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					Your Cart
-				</span>
-
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-			
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{asset('images/item-cart-01.jpg') }}" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $19.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{asset('images/item-cart-02.jpg') }}" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $39.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{asset('images/item-cart-03.jpg') }}" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $17.00
-							</span>
-						</div>
-					</li>
-				</ul>
-				
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
-					</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
-						</a>
-
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- breadcrumb -->
-	<div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				Shoping Cart
-			</span>
-		</div>
-	</div>
-		
-
+	
 	<!-- Shoping Cart -->
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
+					<div class="m-l-25 m-r--38 m-lr-0-xl">z
 						<form method="post" action="{{url('cart/edit/'.Auth::user()->id)}}">
 
 							{{csrf_field()}}
@@ -358,6 +194,7 @@
 
 									@php
 										$total_all = 0;
+										$cart = \App\Cart::where('user_id', \Auth::user()->id)->get();
 									@endphp
 
 									@foreach($cart as $data)
@@ -389,7 +226,8 @@
 										</td>
 										<td class="column-5">{{number_format($data->jumlah_brg * $data->product->harga,2,',','.')}}</td>
 										<td>
-											<a href="{{url('cart/delete', $data->id)}}" class="btn btn-danger">X</a>
+											<a href="{{url('cart/delete', $data->id)}}"></a>
+											<button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
 										</td>
 									</tr>
 									@endforeach
@@ -423,7 +261,7 @@
 									</span>
 								</div>
 						  		<div class="form-group {{ $errors->has('alamat') ? ' has-error' : '' }}">
-						  			<label class="control-label">alamat</label>	
+						  			<label class="control-label">Alamat</label>	
 						  			<input type="text" name="alamat" class="form-control"  required>
 						  			@if ($errors->has('alamat'))
 			                            <span class="help-block">
@@ -433,7 +271,7 @@
 						  		</div>
 
 						  		<div class="form-group {{ $errors->has('no_tlp') ? ' has-error' : '' }}">
-						  			<label class="control-label">no_tlp</label>	
+						  			<label class="control-label">No Telepon</label>	
 						  			<input type="text" name="no_tlp" class="form-control"  required>
 						  				@if ($errors->has('no_tlp'))
 			                            <span class="help-block">
@@ -443,10 +281,10 @@
 						  		</div>
 
 								<div class="form-group {{ $errors->has('pembayaran') ? ' has-error' : '' }}">
-						  			<label class="control-label">pembayaran</label>
+						  			<label class="control-label">Pembayaran</label>
 						  			<select class="form-control" name="pembayaran" required>
-															<option>Bayar ditempat</option>
 															<option>Transfer</option>
+															<option>Bayar ditempat</option>
 														</select>
 						  			@if ($errors->has('pembayaran'))
 			                            <span class="help-block">
@@ -456,7 +294,7 @@
 						  		</div>
 
 						  		<div class="form-group {{ $errors->has('pengiriman') ? ' has-error' : '' }}">
-						  			<label class="control-label">pengiriman</label>
+						  			<label class="control-label">Pengiriman</label>
 						  			<select class="form-control" name="pengiriman" required>
 															<option>JNE</option>
 															<option>J&T</option>
@@ -471,18 +309,23 @@
 						  		</div>
 
 						  		<div class="form-group {{ $errors->has('cek_pembayaran') ? ' has-error' : '' }}">
-						  			<label class="control-label">cek transfer</label>
+						  			<label class="control-label">Cek transfer</label>
 						  			<td>
-										<a class="btn btn-primary" href="https://www.jne.co.id/"><i class="">&nbsp</i>JNE</a>
+										<a href="https://www.jne.co.id" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+										<img src="{{asset('images/jne.jpg')}}" width="70" height="40">
+										</a>
 									</td>
 									<td>
-										<a class="btn btn-primary" href="https://www.jet.co.id/"><i class="">&nbsp</i>J&T</a>
+										<a href="https://www.jet.co.id/" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+										<img src="{{asset('images/j&t1.png')}}" width="65" height="30">
 									</td>
 									<td>
-										<a class="btn btn-primary" href="https://indahonline.com/"><i class="">&nbsp</i>Indah Cargo</a>
+										<a href="https://indahonline.com/" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+										<img src="{{asset('images/indah-cargo.png')}}" width="80" height="50">
 									</td>
 									<td>
-										<a class="btn btn-primary" href="http://www.legapaket.com/"><i class="">&nbsp</i>Lega Paket</a>
+										<a href="https://legapaket.com/" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+										<img src="{{asset('images/legapaket.png')}}" width="80" height="50">
 									</td>
 						  		</div>
 
@@ -510,135 +353,39 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						Categories
-					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
-							</a>
-						</li>
-					</ul>
+					
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Help
+						Contact<br><br>
 					</h4>
 
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
-					</h4>
-
-					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
-					</p>
-
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-facebook"></i>
+						<div class="p-t-27">
+						<a href="" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" >
+							<img src="{{asset('images/line.png')}}" width="33" height="33"> line
 						</a>
+						<br><br>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-instagram"></i>
+						<a href="https://www.instagram.com/mokuzai.craft" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<img src="{{asset('images/ig.png')}}" width="30" height="30"> mokuzai.craft
 						</a>
+						<br><br>
 
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-pinterest-p"></i>
+						<a href="" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<img src="{{asset('images/wa.png')}}" width="27" height="27"> whatsapp
 						</a>
 					</div>
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						<center>Mitra</center>
 					</h4>
 
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-							<div class="focus-input1 trans-04"></div>
-						</div>
-
-						<div class="p-t-18">
-							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
-							</button>
-						</div>
-					</form>
 				</div>
+
 			</div>
-
-			<div class="p-t-40">
-				<div class="flex-c-m flex-w p-b-18">
-					<a href="#" class="m-all-1">
-						<img src="{{asset('images/icons/icon-pay-01.png') }}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('images/icons/icon-pay-02.png') }}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('images/icons/icon-pay-03.png') }}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('images/icons/icon-pay-04.png') }}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('images/icons/icon-pay-05.png') }}" alt="ICON-PAY">
-					</a>
-				</div>
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
