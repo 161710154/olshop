@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laratrust\LaratrustFacade as Laratrust;
 use App\Custom;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailable;
 class HomeController extends Controller
 {
     /**
@@ -38,6 +40,18 @@ class HomeController extends Controller
     {
         return view('frontend.index');
     }
+
+
+    public function mail($id)
+    {
+       $cart = \App\Cart::where('user_id', $id)->get();
+       $custom = \App\Custom::where('user_id', $id)->get();
+       $user = \App\User::where('id', $id)->first();
+       Mail::to($user->email)->send(new SendMailable($cart,$custom));
+       
+       return redirect('/');
+    }
+
 
     // protected function membercustomDashboard()
     // {
