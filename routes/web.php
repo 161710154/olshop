@@ -135,6 +135,7 @@ Route::group(['middleware'=>'auth'],function(){
             $custom->save();
         }
         $del = \App\Cart::where('user_id', $user_id)->delete();
-        return redirect()->back();
+        return  redirect('/send/email/'.$user_id);
     });
 });
+Route::get('/send/email/{id}', 'HomeController@mail');
