@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Custom extends Model
 {
     protected $table = 'customs';
-    protected $fillable = ['nama', 'alamat', 'no_tlp', 'pengiriman', 'jumlah_brg', 'pembayaran', 'product_id', 'user_id'];
+    protected $fillable = ['nama', 'alamat', 'no_tlp', 'pengiriman', 'jumlah_brg', 'pembayaran', 'product_id', 'user_id','id_parent'];
     public $timestamps = true;
 
     public function product()

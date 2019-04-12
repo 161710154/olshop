@@ -34,7 +34,15 @@ tr:nth-child(even) {
     <th>Jumlah</th>
     <th>Total</th>
   </tr>
+  @php 
+   
+    $total_all = 0;
+  @endphp
   @foreach($name as $data)
+  @php 
+    $t_s = $data->jumlah_brg * $data->product->harga;
+    $total_all = $total_all + $t_s;
+  @endphp
 	  <tr>
 	    <td>{{$data->product->nama}}</td>
 	    <td>{{number_format($data->product->harga,2,',','.')}}</td>
@@ -42,7 +50,9 @@ tr:nth-child(even) {
 	    <td>{{number_format($data->jumlah_brg * $data->product->harga,2,',','.')}}</td>
 	  </tr>
 	@endforeach
-  
+    <tr>
+      <td colspan="4">{{$total_all}}</td>
+    </tr>
 </table>
 
 </body>
