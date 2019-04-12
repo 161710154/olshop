@@ -44,10 +44,11 @@ class HomeController extends Controller
 
     public function mail($id)
     {
-       $cart = \App\Cart::where('user_id', $id)->get();
-       $custom = \App\Custom::where('user_id', $id)->get();
-       $user = \App\User::where('id', $id)->first();
-       Mail::to($user->email)->send(new SendMailable($cart,$custom));
+       // $cart = \App\Cart::where('id_parent', (int)$id)->get();
+       // dd($cart);
+       $custom = \App\Custom::where('id_parent', $id)->get();
+       $user = \App\User::where('id', $custom[0]->user_id)->first();
+       Mail::to($user->email)->send(new SendMailable($custom,$custom));
        
        return redirect('/');
     }

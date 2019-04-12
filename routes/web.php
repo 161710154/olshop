@@ -122,6 +122,9 @@ Route::group(['middleware'=>'auth'],function(){
             'pembayaran' => 'required|',
         ]);
         // dd(json_decode($request->chart));
+        $Custom_parent = new \App\Custom_parent;
+        $Custom_parent->user_id = \Auth::user()->id;
+        $Custom_parent->save();
         foreach(json_decode($request->chart) as $data){
             $custom = new \App\custom;
             $custom->nama = \Auth::user()->name;
@@ -132,10 +135,11 @@ Route::group(['middleware'=>'auth'],function(){
             $custom->pembayaran = $request->pembayaran;
             $custom->product_id = $data->product_id;
             $custom->user_id = \Auth::user()->id;
+            $custom->id_parent = $Custom_parent->id;
             $custom->save();
         }
         $del = \App\Cart::where('user_id', $user_id)->delete();
-        return  redirect('/send/email/'.$user_id);
+        return  redirect('/send/email/'.$Custom_parent->id);
     });
 });
 Route::get('/send/email/{id}', 'HomeController@mail');

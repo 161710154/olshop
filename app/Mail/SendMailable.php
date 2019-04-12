@@ -21,6 +21,7 @@ class SendMailable extends Mailable
     public function __construct($name,$custom)
     {
         $this->name = $name;
+        // dd($cart);
         $this->custom = $custom;
     }
 
